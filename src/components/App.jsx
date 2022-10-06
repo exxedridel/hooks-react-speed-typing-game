@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/global.scss";
 
 const App = () => {
   const [textArea, setTextArea] = useState("");
-  console.log(textArea);
+  const [timeRemaining, setTimeRemaining] = useState(25);
+
+  useEffect(() => {
+    if (timeRemaining > 0) {
+      setTimeout(() => {
+        setTimeRemaining((prevTimer) => prevTimer - 1);
+      }, 1000);
+    }
+  }, [timeRemaining]);
 
   function handleChange(e) {
     const { value } = e.target;
@@ -20,7 +28,7 @@ const App = () => {
     <div>
       <h1>How fast do you type?</h1>
       <textarea value={textArea} placeholder="" onChange={handleChange} />
-      <h4>Time reminaing: ???</h4>
+      <h4>Time reminaing: {timeRemaining}</h4>
       <button onClick={() => countWords(textArea)}>Start</button>
       <h1>Word count: ???</h1>
     </div>
